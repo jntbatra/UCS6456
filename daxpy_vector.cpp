@@ -25,8 +25,8 @@ int main() {
 
         double start = omp_get_wtime();
 
-        // Run 1000 times for mesureable time
-        for (int run = 0; run < 1000; run++) {
+        // Run 10000 times for mesureable time
+        for (int run = 0; run < 10000; run++) {
             #pragma omp parallel for num_threads(threads)
             for (int i = 0; i < n; i++) {
                 X[i] = a * X[i] + Y[i];
