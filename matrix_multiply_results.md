@@ -1,13 +1,14 @@
 # Matrix Multiply Results (matrix_multiply.cpp)
 
+
+### Q2. Matrix Multiply : Build a parallel implementation of multiplication of large matrices (Eg. size could be 1000x1000). Repeat the experiment from the previous uestion for this implementation. Think about how topartition the work amongst the threads – which elements of the product array will be calculated by each thread? implement 2 version of parallelimplementation for given task. First, use 1D threading(i.e., make a single loop run in parallel). Second, use 2D threading (i.e., use nested looping to the most suitable loops to be parallelized)
+
 Matrix Multiply: C = A * B  
 Size: 1000x1000
 
-This document summarizes the runtime and speedup measurements for four parallel implementations included in `matrix_multiply.cpp`.
-
 ## Concise Answer
 
-Yes — implemented 1D (rows) and 2D (collapse) parallelizations. Transposing `B` improves cache locality; use 1D for simplicity, 2D or blocked/BLAS for best performance.
+Implemented 1D (rows) and 2D (collapse) parallelizations. Transposing `B` improves cache locality; use 1D for simplicity, 2D or blocked/BLAS for best performance.
 
 
 ---
@@ -24,9 +25,6 @@ Threads  Time(s)  Speedup
 16      0.886   8.12528
 ```
 
-Reference image (1D results):
-
-![1D Results](1D.png)
 
 ---
 
@@ -41,8 +39,8 @@ Threads  Time(s)  Speedup
 8       1.038   6.70809
 16      0.843   8.25979
 ```
+![1D Results](1D.png)
 
-(Shown together with Simple 1D in the 1D image)
 
 ---
 
@@ -70,7 +68,6 @@ Threads  Time(s)  Speedup
 16      0.908   7.74559
 ```
 
-Reference image (2D results):
 
 ![2D Results](2D.png)
 
@@ -82,7 +79,8 @@ Problem: Build parallel implementations for C = A * B for large square matrices 
 Approach implemented in `matrix_multiply.cpp`:
 - Two primary parallelization strategies are implemented:
 	- 1D threading — parallelize a single loop (rows). Implemented both with and without transposing `B`.
-	- 2D threading — parallelize two nested loops (rows and columns) with OpenMP `collapse(2)`. Implemented both with and without transposing `B`.
+	- 2D threading — parallelize two nested loops (rows and columns) with OpenMP `collapse(2)`.  Implemented both with and without transposing `B`.
+ Collapse(2) is an interesting way to combine 2 nested loops are treated as one big loop, so OpenMP can distribute work accross threads
 
 Partitioning and correctness:
 - 1D threading (rows): the outer loop over `i` (rows of `C`) is distributed across threads. Each thread computes a contiguous subset of rows. Every element `C[i*N + j]` is written exactly once by the thread that owns row `i`, so there are no races and no synchronization is required.
@@ -97,7 +95,7 @@ Which elements each thread computes (summary):
 
 Observed results (summary)
 - Size: 1000×1000. See the embedded images for the experiment plots.
-- All four implementations were measured for 1,2,4,8,16 threads. Example timings (seconds) and speedup shown in earlier sections for each method. Key takeaways:
+- All four implementations were measured for 1,2,4,8,16 threads.
 	- Transpose versions reduce the single-thread baseline (better cache use) and therefore give a faster baseline.
 	- Collapse-based 2D threading gives finer-grain parallelism and similar or slightly better scaling compared to 1D threading on this workload and system.
 
