@@ -7,7 +7,8 @@ double compute_pi_seq(long steps)
 {
     double sum = 0.0;
     double step = 1.0 / (double)steps;
-    for (long i = 0; i < steps; i++) {
+    for (long i = 0; i < steps; i++)
+    {
         double x = (i + 0.5) * step;
         sum += 4.0 / (1.0 + x * x);
     }
@@ -27,11 +28,13 @@ int main(void)
     printf("Sequential: pi = %.12f  Time(s) = %.6f\n\n", pi, time_seq);
 
     printf("Threads\tTime(s)\tSpeedup\n");
-    for (int threads = 1; threads <= max_threads; threads *= 2) {
+    for (int threads = 1; threads <= max_threads; threads *= 2)
+    {
         double sum = 0.0;
         start = omp_get_wtime();
-#pragma omp parallel for reduction(+:sum) num_threads(threads)
-        for (long i = 0; i < num_steps; i++) {
+#pragma omp parallel for reduction(+ : sum) num_threads(threads)
+        for (long i = 0; i < num_steps; i++)
+        {
             double x = (i + 0.5) * (1.0 / (double)num_steps);
             sum += 4.0 / (1.0 + x * x);
         }
