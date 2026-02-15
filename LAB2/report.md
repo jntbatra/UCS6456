@@ -16,8 +16,7 @@
 4. [Question 3: Scientific Computing Heat Diffusion Simulation](#question-3-scientific-computing--heat-diffusion-simulation)
 5. [Profiling Tools Exposure](#profiling-tools-exposure)
 6. [What I Learned](#what-i-learned)
-7. [Conclusion](#conclusion)
-8. [References](#references)
+7. [References](#references)
 
 ---
 
@@ -993,23 +992,6 @@ For our system with p=8 threads:
 **Key Insight:** Q3 (Heat Diffusion) scales best because it has the largest workload (250M ops), regular memory access, and no synchronization overhead. Q2 (Smith-Waterman) scales worst due to the wavefront dependency limiting parallelism on short diagonals.
 
 ---
-
-# Conclusion
-
-## Summary of Achievements
-
-| Goal | Target | Achieved | Status |
-|-------------------------------|-----------------|------------------------|--------------|
-| Q1: Parallelize N-body | OpenMP threads | 1-8 threads | |
-| Q1: Handle race conditions | Thread-safe | Thread-local arrays | |
-| Q1: Energy conservation | ±0.01% | ±0.0001% | |
-| Q2: Wavefront parallelization | Anti-diagonal | Working | |
-| Q2: Scheduling comparison | 3 strategies | static/dynamic/guided| |
-| Q2: Correct alignment | Verified score | 920 (all runs) | |
-| Q3: Heat diffusion | Finite diff. | 500×500 grid | |
-| Q3: Reduction for heat | Total heat | 6,249,900 | |
-| Q3: Scheduling strategies | Compare 3 | Static wins | |
-| Performance measurement | Speedup/Eff. | All three problems | |
 
 ## Key Findings
 
