@@ -42,29 +42,29 @@ html = f"""<!DOCTYPE html>
 body {{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #000;
     max-width: 100%;
     font-size: 11pt;
 }}
 h1 {{
-    color: #2c3e50;
-    border-bottom: 3px solid #3498db;
+    color: #000;
+    border-bottom: 3px solid #000;
     padding-bottom: 10px;
     font-size: 22pt;
 }}
 h2 {{
-    color: #2980b9;
-    border-bottom: 1px solid #ddd;
+    color: #000;
+    border-bottom: 1px solid #999;
     padding-bottom: 5px;
     margin-top: 30px;
     font-size: 16pt;
 }}
 h3 {{
-    color: #27ae60;
+    color: #000;
     font-size: 13pt;
 }}
 h4 {{
-    color: #8e44ad;
+    color: #000;
     font-size: 12pt;
 }}
 code {{
@@ -100,7 +100,7 @@ th, td {{
     text-align: left;
 }}
 th {{
-    background-color: #3498db;
+    background-color: #333;
     color: white;
     font-weight: bold;
 }}
@@ -117,11 +117,11 @@ img {{
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }}
 blockquote {{
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #333;
     margin: 10px 0;
     padding: 10px 20px;
-    background-color: #f0f7ff;
-    color: #2c3e50;
+    background-color: #f5f5f5;
+    color: #000;
 }}
 hr {{
     border: none;
