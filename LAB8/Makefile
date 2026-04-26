@@ -19,10 +19,15 @@ SM        := native
 NVCC      := nvcc
 NVCCFLAGS := -O2 -arch=$(SM) -lineinfo
 
+# cuDNN paths (pip install nvidia-cudnn-cu12, or set CUDNN_PATH)
+CUDNN_PATH ?= $(shell python3 -c "import nvidia.cudnn; print(nvidia.cudnn.__path__[0])" 2>/dev/null)
+CUDNN_INC  := $(if $(CUDNN_PATH),-I$(CUDNN_PATH)/include)
+CUDNN_LIB  := $(if $(CUDNN_PATH),-L$(CUDNN_PATH)/lib -Xlinker -rpath -Xlinker $(CUDNN_PATH)/lib)
+
 # Libraries
 LIBS_BASE  := -lm
 LIBS_BLAS  := -lcublas $(LIBS_BASE)
-LIBS_FULL  := -lcudnn -lcublas $(LIBS_BASE)
+LIBS_FULL  := $(CUDNN_LIB) -lcudnn -lcublas $(LIBS_BASE)
 
 .PHONY: all clean ex01 ex02 ex03 ex04 ex05 \
         run_ex01 run_ex02 run_ex03 run_ex04
@@ -46,7 +51,7 @@ ex04: ex04_cnn_layers.cu
 	@echo "[✓] Built $@"
 
 ex05: ex05_mnist_cnn.cu
-	$(NVCC) $(NVCCFLAGS) $< -o $@ $(LIBS_FULL)
+	$(NVCC) $(NVCCFLAGS) $(CUDNN_INC) $< -o $@ $(LIBS_FULL)
 	@echo "[✓] Built $@"
 
 run_ex01: ex01
